@@ -26,11 +26,11 @@ import static org.mockito.Mockito.verify;
 public class ChatPresenterTest {
 
     private ChatPresenter chatPresenter;
+    private String username = "TestUser";
 
     @Before
     public void setUp(){
-        chatPresenter = new ChatPresenter();
-
+        chatPresenter = new ChatPresenter(username);
     }
 
 

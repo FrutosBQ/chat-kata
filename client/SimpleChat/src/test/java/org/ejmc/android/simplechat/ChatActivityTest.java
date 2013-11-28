@@ -47,10 +47,10 @@ public class ChatActivityTest {
 
     @Test
     public void shouldHaveUsernameTextView() throws Exception {
-
-        TextView username = (TextView) activity.findViewById(R.id.chat_textView_user);
+        TextView username = (TextView) activity.findViewById(R.id.chat_textView_username);
         assertNotNull(username);
     }
+
     @Test
     public void shouldHaveMessageEditText() throws Exception {
 
@@ -93,12 +93,6 @@ public class ChatActivityTest {
         for(int i=0;i<messages.size();i++){
              assertThat(messages.get(i),equalTo(messagesListView.getItemAtPosition(i)));
         }
-
-
-
-
-
-
     }
 }
 

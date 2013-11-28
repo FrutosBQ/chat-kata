@@ -29,17 +29,26 @@ public class ChatActivity extends Activity implements IChatView {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_chat);
 
-        if (chatPresenter==null) chatPresenter = new ChatPresenter();
-        chatPresenter.setView(this);
-        chatPresenter.startReadingMessageProcess();
-
         configureListeners();
 
         messages = new Vector<Message>();
-        messages.add(new Message("pepe","hola"));
         listaAdapter = new ListaAdapter(messages);
         ListView lv = (ListView)findViewById(R.id.chat_listView_messages);
         lv.setAdapter(listaAdapter);
+
+
+        Bundle extras = getIntent().getExtras();
+        String usernameConfigured = "testUser";
+        if (extras!=null)usernameConfigured = extras.get("Username").toString();
+
+        TextView usernameText = (TextView)findViewById(R.id.chat_textView_username);
+
+        usernameText.setText(usernameConfigured);
+
+        if (chatPresenter==null) chatPresenter = new ChatPresenter(usernameConfigured);
+        chatPresenter.setView(this);
+        chatPresenter.startReadingMessageProcess();
+
     }
 
     private void configureListeners() {
@@ -77,13 +86,8 @@ public class ChatActivity extends Activity implements IChatView {
 
     @Override
     public void newMessages(Vector<Message> messages) {
-        if(messages.size()>0){
-            Toast toast = Toast.makeText(this, messages.get(0).message, Toast.LENGTH_SHORT);
-            toast.show();
-        }
         listaAdapter.addMessages(messages);
         listaAdapter.notifyDataSetChanged();
-
     }
 
     @Override
@@ -134,7 +138,7 @@ public class ChatActivity extends Activity implements IChatView {
         }
 
         public void addMessages(Vector<Message> messages){
-            this.messages.addAll(messages);
+            if (messages != null) this.messages.addAll(messages);
         }
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {

@@ -20,8 +20,8 @@ public class ChatPresenter implements IChatPresenter{
 
     private ServerComunicationModel scm;
 
-    public ChatPresenter(){
-        scm = new ServerComunicationModel("http://172.16.100.188:8080");
+    public ChatPresenter(String username){
+        scm = new ServerComunicationModel("http://172.16.100.188:8080", username);
     }
 
     @Override
@@ -34,21 +34,25 @@ public class ChatPresenter implements IChatPresenter{
     public void startReadingMessageProcess() {
             HttpAsynTask task = new HttpAsynTask(this);
             task.execute();
-
     }
 
     public void updateView(Vector<Message> last_messages){
          view.newMessages(last_messages);
     }
 
+
+    public boolean sendMessageToModel(String message){
+        try {
+            return scm.sendMessage(message);
+        } catch (Exception e) {
+            return false;
+        }
+    }
+
     @Override
     public void sendMessage(String message) {
-        try {
-            scm.sendMessage(message);
-        } catch (Exception e) {
-            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
-        }
-
+        HttpPostAsynTask task = new HttpPostAsynTask(this);
+        task.execute();
     }
 
     public void setScm(ServerComunicationModel scm) {
@@ -57,5 +61,10 @@ public class ChatPresenter implements IChatPresenter{
 
     public Vector<Message> retriveMessages() throws IOException, ParseNetResultException {
         return scm.getLastMessages();
+    }
+
+    public void sendMessageResult(boolean result) {
+        if(result) view.messageSendedOK();
+        else view.messageSendedError();
     }
 }
