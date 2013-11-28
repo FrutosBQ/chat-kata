@@ -2,5 +2,10 @@
 <resources>
 
     <string name="app_name">SimpleChat</string>
-
+    <string name="main_text_login">Login</string>
+    <string name="main_text_password">Password</string>
+    <string name="main_button_login">Login</string>
+    <string name="chat_text_wellcome">Wellcome</string>
+    <string name="chat_button_send"> > </string>
+    <string name="error_login">Error: Login/Password erroneo</string>
 </resources>

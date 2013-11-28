@@ -1,9 +1,9 @@
 package org.ejmc.android.simplechat;
 
-import com.xtremelabs.robolectric.RobolectricTestRunner;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.robolectric.RobolectricTestRunner;
 
 /**
  * Created with IntelliJ IDEA.
@@ -30,8 +30,8 @@ public class LoginPresenterTest {
     public void testDoLogin() throws Exception {
         ILoginView loginViewMock = mock(ILoginView.class);
         loginPresenter.setView(loginViewMock);
-        loginPresenter.doLogin("username", "password");
-        verify(loginViewMock).navigateToChatWhitUsername("username");
+        loginPresenter.doLogin("nick", "password");
+        verify(loginViewMock).navigateToChatWhitUsername("nick");
     }
 
     @Test
