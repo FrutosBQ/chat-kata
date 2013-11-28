@@ -168,3 +168,4 @@ public class ChatActivity extends Activity implements IChatView {
 
 
 }
+

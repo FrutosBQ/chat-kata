@@ -87,3 +87,4 @@ public class LoginActivity extends Activity implements ILoginView {
         navigate(ChatActivity.class, bundle);
     }
 }
+
