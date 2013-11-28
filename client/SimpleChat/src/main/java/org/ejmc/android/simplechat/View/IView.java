@@ -1,4 +1,4 @@
-package org.ejmc.android.simplechat;
+package org.ejmc.android.simplechat.View;
 
 import android.os.Bundle;
 

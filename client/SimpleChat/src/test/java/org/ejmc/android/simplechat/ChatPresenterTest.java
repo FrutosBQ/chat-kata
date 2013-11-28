@@ -1,5 +1,9 @@
 package org.ejmc.android.simplechat;
 
+import org.ejmc.android.simplechat.Model.Message;
+import org.ejmc.android.simplechat.Model.ServerComunicationModel;
+import org.ejmc.android.simplechat.Presenter.ChatPresenter;
+import org.ejmc.android.simplechat.View.IChatView;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;

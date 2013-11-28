@@ -1,7 +1,8 @@
-package org.ejmc.android.simplechat;
+package org.ejmc.android.simplechat.Presenter;
 
 import android.os.AsyncTask;
-import org.json.JSONException;
+import org.ejmc.android.simplechat.Model.Message;
+import org.ejmc.android.simplechat.Model.ParseNetResultException;
 
 import java.io.IOException;
 import java.util.Vector;

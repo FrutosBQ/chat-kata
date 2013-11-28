@@ -1,4 +1,6 @@
-package org.ejmc.android.simplechat;
+package org.ejmc.android.simplechat.Presenter;
+
+import org.ejmc.android.simplechat.View.IChatView;
 
 /**
  * Created with IntelliJ IDEA.

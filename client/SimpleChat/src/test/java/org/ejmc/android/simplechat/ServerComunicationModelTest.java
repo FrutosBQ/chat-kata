@@ -1,22 +1,17 @@
 package org.ejmc.android.simplechat;
 
 
-import org.apache.http.HttpResponse;
-import org.apache.http.ProtocolVersion;
-import org.apache.http.entity.StringEntity;
-import org.apache.http.message.BasicHttpResponse;
-import org.json.JSONException;
+import org.ejmc.android.simplechat.Model.Message;
+import org.ejmc.android.simplechat.Model.ParseNetResultException;
+import org.ejmc.android.simplechat.Model.ServerComunicationModel;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mockito;
 import org.robolectric.Robolectric;
 import org.robolectric.RobolectricTestRunner;
-import org.robolectric.shadows.ShadowApplication;
-import org.robolectric.tester.org.apache.http.FakeHttpLayer;
 
 import java.io.IOException;
-import java.io.UnsupportedEncodingException;
 import java.util.Vector;
 
 import static org.hamcrest.CoreMatchers.equalTo;

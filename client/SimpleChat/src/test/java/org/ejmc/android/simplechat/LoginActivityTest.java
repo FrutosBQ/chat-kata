@@ -6,6 +6,9 @@ import android.os.Bundle;
 import android.widget.Button;
 import android.widget.EditText;
 
+import org.ejmc.android.simplechat.Presenter.ILoginPresenter;
+import org.ejmc.android.simplechat.View.ChatActivity;
+import org.ejmc.android.simplechat.View.LoginActivity;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;

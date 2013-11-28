@@ -1,4 +1,4 @@
-package org.ejmc.android.simplechat;
+package org.ejmc.android.simplechat.Model;
 
 import com.google.gson.annotations.SerializedName;
 

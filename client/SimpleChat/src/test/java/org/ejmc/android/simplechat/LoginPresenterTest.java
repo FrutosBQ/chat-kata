@@ -1,5 +1,7 @@
 package org.ejmc.android.simplechat;
 
+import org.ejmc.android.simplechat.Presenter.LoginPresenter;
+import org.ejmc.android.simplechat.View.ILoginView;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;

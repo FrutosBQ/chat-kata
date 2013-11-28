@@ -2,6 +2,9 @@ package org.ejmc.android.simplechat;
 
 import android.os.Bundle;
 import android.widget.*;
+import org.ejmc.android.simplechat.Model.Message;
+import org.ejmc.android.simplechat.Presenter.ChatPresenter;
+import org.ejmc.android.simplechat.View.ChatActivity;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;

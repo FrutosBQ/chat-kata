@@ -1,4 +1,6 @@
-package org.ejmc.android.simplechat;
+package org.ejmc.android.simplechat.View;
+
+import org.ejmc.android.simplechat.Model.Message;
 
 import java.util.Vector;
 
