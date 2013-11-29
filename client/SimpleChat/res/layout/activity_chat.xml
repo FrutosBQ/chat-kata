@@ -28,7 +28,7 @@
             <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:id="@+id/chat_textView_username" android:layout_gravity="center" android:text="pepito"
+                    android:id="@+id/chat_textView_username" android:layout_gravity="center" android:text="user"
                     android:layout_margin="0dp" android:textStyle="italic" android:textIsSelectable="false"
                     android:textSize="10pt" android:focusable="false" android:focusableInTouchMode="false"/>
         </LinearLayout>

@@ -7,7 +7,7 @@ package org.ejmc.android.simplechat.View;
  * Time: 11:09
  * To change this template use File | Settings | File Templates.
  */
-public interface ILoginView extends  IView{
+public interface ILoginView extends IView {
 
     public void errorLoginPassword();
 

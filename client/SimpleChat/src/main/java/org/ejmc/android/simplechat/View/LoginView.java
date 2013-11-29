@@ -13,19 +13,17 @@ import org.ejmc.android.simplechat.R;
 
 /**
  * Main activity.
- * 
+ * <p/>
  * Shows login config.
- *
- * 
  */
 public class LoginView extends Activity implements ILoginView {
 
     private ILoginPresenter loginPresenter;
 
     @Override
-	protected void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_login);
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_login);
         Button button_Login = (Button) findViewById(R.id.login_Button_login);
 
         button_Login.setOnClickListener(new View.OnClickListener() {
@@ -36,13 +34,13 @@ public class LoginView extends Activity implements ILoginView {
         });
         loginPresenter = new LoginPresenter();
         loginPresenter.setView(this);
- 	}
+    }
 
     private void doLogin() {
         //To change body of created methods use File | Settings | File Templates.
         EditText username = (EditText) this.findViewById(R.id.login_EditText_username);
         EditText password = (EditText) this.findViewById(R.id.login_EditText_password);
-        loginPresenter.doLogin( username.getText().toString(), password.getText().toString());
+        loginPresenter.doLogin(username.getText().toString(), password.getText().toString());
 
     }
 

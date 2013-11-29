@@ -20,24 +20,24 @@ public class SimpleChat extends Application {
 
     private static Handler delayhandler;
 
-    public void onCreate(){
-            super.onCreate();
-            SimpleChat.context = getApplicationContext();
-            delayhandler = new Handler();
+    public void onCreate() {
+        super.onCreate();
+        SimpleChat.context = getApplicationContext();
+        delayhandler = new Handler();
         registerActivityLifecycleCallbacks(new LifeCycleHandler());
 
-        }
+    }
 
-        public static Context getAppContext() {
-            return SimpleChat.context;
-        }
+    public static Context getAppContext() {
+        return SimpleChat.context;
+    }
 
     public static void startReadingMessages(ChatPresenter chatPresenter) {
-        if (loopRetrieveMessages==null) {
+        if (loopRetrieveMessages == null) {
             loopRetrieveMessages = new LoopRetrieveMessages(chatPresenter, delayhandler);
 
             delayhandler.postDelayed(loopRetrieveMessages, 500);
-        }else{
+        } else {
             loopRetrieveMessages.setPresenter(chatPresenter);
         }
     }
@@ -57,9 +57,9 @@ public class SimpleChat extends Application {
         @Override
         public void onActivityResumed(Activity activity) {
             //To change body of implemented methods use File | Settings | File Templates.
-            if(activity.getClass().equals(ChatView.class)){
-                ((ChatView)activity).startReadingMessageProcess();
-                ((ChatView)activity).setMessage(messages_backup);
+            if (activity.getClass().equals(ChatView.class)) {
+                ((ChatView) activity).startReadingMessageProcess();
+                ((ChatView) activity).setMessage(messages_backup);
 
             }
         }
@@ -67,11 +67,11 @@ public class SimpleChat extends Application {
         @Override
         public void onActivityPaused(Activity activity) {
             //To change body of implemented methods use File | Settings | File Templates.
-            if(activity.getClass().equals(ChatView.class)){
-                messages_backup = ((ChatView)activity).getMessage();
+            if (activity.getClass().equals(ChatView.class)) {
+                messages_backup = ((ChatView) activity).getMessage();
             }
 
-            if(loopRetrieveMessages!=null){
+            if (loopRetrieveMessages != null) {
                 loopRetrieveMessages.stop();
                 loopRetrieveMessages = null;
             }

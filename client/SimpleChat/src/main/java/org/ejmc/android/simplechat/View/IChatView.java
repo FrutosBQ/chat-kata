@@ -11,9 +11,11 @@ import java.util.Vector;
  * Time: 16:40
  * To change this template use File | Settings | File Templates.
  */
-public interface IChatView extends  IView{
+public interface IChatView extends IView {
 
     void messageSendedOK();
+
     void messageSendedError();
+
     void newMessages(Vector<Message> messages);
 }

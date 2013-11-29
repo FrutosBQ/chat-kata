@@ -10,8 +10,11 @@ import android.os.Bundle;
  */
 public interface IView {
     public abstract void navigate(Class<?> destination);
+
     public abstract void navigate(Class<?> destination, boolean logoutFlag);
+
     public abstract void navigate(Class<?> destination, Bundle extras);
+
     public abstract void showError(String errorMessage);
 }
 
