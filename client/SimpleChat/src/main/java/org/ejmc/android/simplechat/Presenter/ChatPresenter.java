@@ -37,10 +37,9 @@ public class ChatPresenter implements IChatPresenter {
 
     @Override
     public void startReadingMessageProcess() {
+
         SimpleChat.startReadingMessages(this);
 
-        // HttpAsynTask task = new HttpAsynTask(this);
-        // task.execute();
     }
 
 
@@ -72,6 +71,7 @@ public class ChatPresenter implements IChatPresenter {
     }
 
     public void sendMessageResult(boolean result) {
+
         if (result) view.messageSendedOK();
         else view.messageSendedError();
     }
