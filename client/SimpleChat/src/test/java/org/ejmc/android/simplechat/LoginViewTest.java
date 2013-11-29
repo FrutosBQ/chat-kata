@@ -7,8 +7,8 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import org.ejmc.android.simplechat.Presenter.ILoginPresenter;
-import org.ejmc.android.simplechat.View.ChatActivity;
-import org.ejmc.android.simplechat.View.LoginActivity;
+import org.ejmc.android.simplechat.View.ChatView;
+import org.ejmc.android.simplechat.View.LoginView;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -22,13 +22,13 @@ import static org.junit.Assert.*;
 import static org.mockito.Mockito.*;
 
 @RunWith(RobolectricTestRunner.class)
-public class LoginActivityTest {
-    private LoginActivity activity;
+public class LoginViewTest {
+    private LoginView activity;
     private Button login_Button;
 
     @Before
     public void setUp() throws Exception {
-        activity = Robolectric.buildActivity(LoginActivity.class).create().get();
+        activity = Robolectric.buildActivity(LoginView.class).create().get();
         login_Button = (Button) activity.findViewById(R.id.login_Button_login);
     }
 
@@ -39,14 +39,14 @@ public class LoginActivityTest {
 
     @Test
     public void shouldHaveProperAppName() throws Exception {
-        String appName = new LoginActivity().getResources().getString(R.string.app_name);
+        String appName = new LoginView().getResources().getString(R.string.app_name);
         assertThat(appName, equalTo("SimpleChat"));
     }
 
     @Test
     public void shouldHaveUsernameEditText() throws Exception {
 
-        //Activity activity = Robolectric.buildActivity(LoginActivity.class).create().get();
+        //Activity activity = Robolectric.buildActivity(LoginView.class).create().get();
         activity.setContentView(R.layout.activity_login);
         EditText username = (EditText) activity.findViewById(R.id.login_EditText_username);
         assertNotNull(username);
@@ -81,23 +81,23 @@ public class LoginActivityTest {
     @Test
     public void NavigateToChatActivity() throws Exception {
 
-       /*activity.navigate(ChatActivity.class);
-        Intent navigation = new Intent(activity, ChatActivity.class);
+       /*activity.navigate(ChatView.class);
+        Intent navigation = new Intent(activity, ChatView.class);
           assertThat(activity, new StartedMatcher(navigation));
         */
 
-        assertEquals(activity.getClass(), LoginActivity.class);
-        activity.navigate(ChatActivity.class);
-      //  assertThat(activity, new StartedMatcher(ChatActivity.class));
+        assertEquals(activity.getClass(), LoginView.class);
+        activity.navigate(ChatView.class);
+      //  assertThat(activity, new StartedMatcher(ChatView.class));
     }
 
     @Test
     public void NavigateToChatActivityWhitBundle() throws Exception {
-        Intent navigation = new Intent(activity, ChatActivity.class);
+        Intent navigation = new Intent(activity, ChatView.class);
         navigation.putExtra("Key_username", "Value_username");
         Bundle bundle = navigation.getExtras();
 
-        activity.navigate(ChatActivity.class, bundle);
+        activity.navigate(ChatView.class, bundle);
       //  assertThat(activity, new StartedMatcher(navigation));
 
     }
@@ -120,7 +120,7 @@ public class LoginActivityTest {
     @Test
     public void testNavigateToChatWithUsername() throws Exception {
         //Helper.showBadServerNotification(activity);
-        Intent navigation = new Intent(activity, ChatActivity.class);
+        Intent navigation = new Intent(activity, ChatView.class);
         navigation.putExtra("Username", "Value_username");
         Bundle bundle = navigation.getExtras();
 

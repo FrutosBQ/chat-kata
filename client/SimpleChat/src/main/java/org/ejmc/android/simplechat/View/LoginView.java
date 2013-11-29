@@ -15,11 +15,10 @@ import org.ejmc.android.simplechat.R;
  * Main activity.
  * 
  * Shows login config.
- * 
- * @author startic
+ *
  * 
  */
-public class LoginActivity extends Activity implements ILoginView {
+public class LoginView extends Activity implements ILoginView {
 
     private ILoginPresenter loginPresenter;
 
@@ -84,7 +83,7 @@ public class LoginActivity extends Activity implements ILoginView {
         //To change body of implemented methods use File | Settings | File Templates.
         Bundle bundle = new Bundle();
         bundle.putString("Username", username);
-        navigate(ChatActivity.class, bundle);
+        navigate(ChatView.class, bundle);
     }
 }
 

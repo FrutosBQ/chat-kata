@@ -4,7 +4,7 @@ import android.os.Bundle;
 import android.widget.*;
 import org.ejmc.android.simplechat.Model.Message;
 import org.ejmc.android.simplechat.Presenter.ChatPresenter;
-import org.ejmc.android.simplechat.View.ChatActivity;
+import org.ejmc.android.simplechat.View.ChatView;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -29,14 +29,14 @@ import static org.robolectric.Robolectric.shadowOf;
  * To change this template use File | Settings | File Templates.
  */
 @RunWith(RobolectricTestRunner.class)
-public class ChatActivityTest {
-    private ChatActivityMock activity;
+public class ChatViewTest {
+    private ChatViewMock activity;
     private ChatPresenter chatPresenterMock;
 
 
     @Before
     public void setUp() throws Exception {
-        activity = Robolectric.buildActivity(ChatActivityMock.class).create().get();
+        activity = Robolectric.buildActivity(ChatViewMock.class).create().get();
         chatPresenterMock = activity.getChatPresenterMock();
     }
 
@@ -87,7 +87,7 @@ public class ChatActivityTest {
         messages.add(new Message("nick2","message2"));
 
 
-        ((ChatActivity)activity).newMessages(messages);
+        ((ChatView)activity).newMessages(messages);
         ListView messagesListView = (ListView) activity.findViewById(R.id.chat_listView_messages);
 
         for(int i=0;i<messages.size();i++){
@@ -97,7 +97,7 @@ public class ChatActivityTest {
 }
 
 
-class ChatActivityMock extends ChatActivity{
+class ChatViewMock extends ChatView {
     public void onCreate(Bundle bundle){
         chatPresenter = Mockito.mock(ChatPresenter.class);
         super.onCreate(bundle);

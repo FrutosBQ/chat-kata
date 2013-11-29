@@ -18,7 +18,7 @@ import java.util.Vector;
  * 
  * @author startic
  */
-public class ChatActivity extends Activity implements IChatView {
+public class ChatView extends Activity implements IChatView {
 
     private  Vector<Message> messages;
     protected ChatPresenter chatPresenter = null;
