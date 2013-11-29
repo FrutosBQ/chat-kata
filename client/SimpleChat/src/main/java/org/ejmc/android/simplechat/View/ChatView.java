@@ -23,6 +23,7 @@ public class ChatView extends Activity implements IChatView {
     private  Vector<Message> messages;
     protected ChatPresenter chatPresenter = null;
     private ListaAdapter listaAdapter;
+    private String username;
 
     @Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -44,6 +45,7 @@ public class ChatView extends Activity implements IChatView {
         TextView usernameText = (TextView)findViewById(R.id.chat_textView_username);
 
         usernameText.setText(usernameConfigured);
+        username = usernameConfigured;
 
         if (chatPresenter==null) chatPresenter = new ChatPresenter(usernameConfigured);
         chatPresenter.setView(this);
@@ -97,6 +99,8 @@ public class ChatView extends Activity implements IChatView {
         message.setText("");
         message.requestFocus();
         //To change body of implemented methods use File | Settings | File Templates.
+        ListView lv = (ListView)findViewById(R.id.chat_listView_messages);
+        lv.setSelection(listaAdapter.getCount()-1);
     }
 
     @Override
@@ -112,8 +116,12 @@ public class ChatView extends Activity implements IChatView {
 
     @Override
     public void newMessages(Vector<Message> messages) {
+        boolean listViewInTheBottom=false;
+        ListView lv = (ListView)findViewById(R.id.chat_listView_messages);
+        if(lv.getLastVisiblePosition()==listaAdapter.getCount()-1)     listViewInTheBottom= true;
         listaAdapter.addMessages(messages);
         listaAdapter.notifyDataSetChanged();
+        if(listViewInTheBottom && messages.size()>0) lv.setSelection(listaAdapter.getCount()-1);
     }
 
     @Override
@@ -153,6 +161,7 @@ public class ChatView extends Activity implements IChatView {
 
         public ListaAdapter(Vector<Message> messages){
             this.messages = messages;
+
         }
 
 
@@ -173,8 +182,21 @@ public class ChatView extends Activity implements IChatView {
         }
 
         public void addMessages(Vector<Message> messages){
-            if (messages != null) this.messages.addAll(messages);
+            if (messages != null){
+                for (Message message : messages ) {
+                    if(this.messages.size()>0){
+                        Message lastMessage = this.messages.lastElement();
+                        if (message.nick.equals(lastMessage.nick)) lastMessage.message+= "\n\n" + message.message;
+                        else this.messages.add(message);
+                    }else{
+                        this.messages.add(message);
+                    }
+                }
+            }
+                //this.messages.addAll(messages)
         }
+
+
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {
 
@@ -182,18 +204,13 @@ public class ChatView extends Activity implements IChatView {
 
             if (row == null) {
                 LayoutInflater inflater = getLayoutInflater();
+
                 row = inflater.inflate(R.layout.messages_list, parent, false);
             }
 
             try {
                 TextView name_lbl = (TextView) row.findViewById(R.id.messagesList_editText_message);
-                if(position>=1 && messages.get(position).nick.equals(messages.get(position-1).nick)){
-                    name_lbl.setText(messages.get(position).message);
-
-                }else{
-                    name_lbl.setText(messages.get(position).nick +" : "+messages.get(position).message);
-
-                }
+                name_lbl.setText(messages.get(position).nick +" : "+messages.get(position).message);
 
 
             }
@@ -204,6 +221,7 @@ public class ChatView extends Activity implements IChatView {
 
             return (row);
         }
+
     }
 
 

@@ -3,11 +3,12 @@
 <LinearLayout
         android:orientation="horizontal"
         android:layout_width="fill_parent"
-        android:layout_height="wrap_content" xmlns:android="http://schemas.android.com/apk/res/android">
+        android:layout_height="wrap_content" xmlns:android="http://schemas.android.com/apk/res/android"
+        android:background="@drawable/bubble" android:paddingLeft="5dp">
     <TextView
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:text="New Text"
-            android:id="@+id/messagesList_editText_message" android:layout_gravity="center_horizontal|top"
-            />
+            android:id="@+id/messagesList_editText_message" android:layout_gravity="center"
+            android:paddingLeft="10dp"/>
 </LinearLayout>

@@ -38,14 +38,14 @@ public class ServerComunicationModel {
     }
 
     private void RecoverLastSeq(){
-        String lastSeqKey = "org.ejmc.android.simplechat.last_seq";
+        String lastSeqKey = "org.ejmc.android.simplechat.last_seq"+username;
         Context context = SimpleChat.getAppContext();
         SharedPreferences preferences = context.getSharedPreferences("org.ejmc.android.simplechat",context.MODE_PRIVATE);
         last_seq = preferences.getInt(lastSeqKey, 0);
     }
 
     private void StoreLastSeq(){
-        String lastSeqKey = "org.ejmc.android.simplechat.last_seq";
+        String lastSeqKey = "org.ejmc.android.simplechat.last_seq"+username;
         Context context = SimpleChat.getAppContext();
         SharedPreferences preferencias= context.getSharedPreferences("org.ejmc.android.simplechat",context.MODE_PRIVATE);
         SharedPreferences.Editor editor = preferencias.edit();
