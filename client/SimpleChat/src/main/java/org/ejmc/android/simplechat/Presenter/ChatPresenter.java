@@ -24,7 +24,7 @@ public class ChatPresenter implements IChatPresenter {
     //public LoopRetriveMessage loopRetrieveMessage;
 
     public ChatPresenter(String username) {
-        scm = new ServerComunicationModel("http://172.16.100.227:8080", username);
+        scm = new ServerComunicationModel("http://172.16.100.85:8080", username);
 
     }
 

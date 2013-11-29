@@ -226,6 +226,7 @@ public class ChatView extends Activity implements IChatView {
 
             try {
                 TextView name_lbl = (TextView) row.findViewById(R.id.messagesList_editText_message);
+                if(messages.get(position).nick.equals(username)) row.setBackgroundResource(R.drawable.my_bubble);
                 String messege_html= "<b>"+messages.get(position).nick + " :</b> " + messages.get(position).message ;
                 name_lbl.setText(Html.fromHtml(messege_html));
 
