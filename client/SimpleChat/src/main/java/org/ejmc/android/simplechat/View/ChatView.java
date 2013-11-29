@@ -47,9 +47,13 @@ public class ChatView extends Activity implements IChatView {
 
         if (chatPresenter==null) chatPresenter = new ChatPresenter(usernameConfigured);
         chatPresenter.setView(this);
-        chatPresenter.startReadingMessageProcess();
-
+        startReadingMessageProcess();
     }
+
+    public void startReadingMessageProcess() {
+        chatPresenter.startReadingMessageProcess();
+    }
+
 
     private void configureListeners() {
         Button button_Login = (Button) findViewById(R.id.chat_button_send);
@@ -91,13 +95,17 @@ public class ChatView extends Activity implements IChatView {
         setFormVisibility(true);
         EditText message = (EditText) this.findViewById(R.id.chat_editText_message);
         message.setText("");
+        message.requestFocus();
         //To change body of implemented methods use File | Settings | File Templates.
     }
 
     @Override
     public void messageSendedError() {
         setFormVisibility(true);
+        EditText message = (EditText) this.findViewById(R.id.chat_editText_message);
+
         showError(getResources().getString(R.string.error_sending_message).toString());
+        message.requestFocus();
         //To change body of implemented methods use File | Settings | File Templates.
 
     }
@@ -127,6 +135,14 @@ public class ChatView extends Activity implements IChatView {
     public void showError(String errorMessage) {
         Toast toast = Toast.makeText(this, errorMessage, Toast.LENGTH_SHORT);
         toast.show();
+    }
+
+    public Vector<Message> getMessage() {
+        return messages;
+    }
+
+    public void setMessage(Vector<Message> messages) {
+        this.messages=messages;
     }
 
 
@@ -171,7 +187,13 @@ public class ChatView extends Activity implements IChatView {
 
             try {
                 TextView name_lbl = (TextView) row.findViewById(R.id.messagesList_editText_message);
-                name_lbl.setText(messages.get(position).nick +" : "+messages.get(position).message);
+                if(position>=1 && messages.get(position).nick.equals(messages.get(position-1).nick)){
+                    name_lbl.setText(messages.get(position).message);
+
+                }else{
+                    name_lbl.setText(messages.get(position).nick +" : "+messages.get(position).message);
+
+                }
 
 
             }

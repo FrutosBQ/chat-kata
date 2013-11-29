@@ -11,7 +11,9 @@ import org.ejmc.android.simplechat.View.IChatView;
  */
 public interface IChatPresenter {
     void setView(IChatView chatView);
+
     void startReadingMessageProcess();
+
     void sendMessage(String message);
 
 }

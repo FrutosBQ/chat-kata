@@ -11,5 +11,6 @@ import org.ejmc.android.simplechat.View.ILoginView;
  */
 public interface ILoginPresenter {
     void doLogin(String username, String password);
+
     void setView(ILoginView loginView);
 }

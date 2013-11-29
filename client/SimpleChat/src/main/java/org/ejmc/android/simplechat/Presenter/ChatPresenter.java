@@ -1,8 +1,10 @@
 package org.ejmc.android.simplechat.Presenter;
 
+import android.os.Handler;
 import org.ejmc.android.simplechat.Model.Message;
 import org.ejmc.android.simplechat.Model.ParseNetResultException;
 import org.ejmc.android.simplechat.Model.ServerComunicationModel;
+import org.ejmc.android.simplechat.SimpleChat;
 import org.ejmc.android.simplechat.View.IChatView;
 
 import java.io.IOException;
@@ -15,13 +17,15 @@ import java.util.Vector;
  * Time: 16:56
  * To change this template use File | Settings | File Templates.
  */
-public class ChatPresenter implements IChatPresenter{
+public class ChatPresenter implements IChatPresenter {
     IChatView view;
 
     private ServerComunicationModel scm;
+    //public LoopRetriveMessage loopRetrieveMessage;
 
-    public ChatPresenter(String username){
+    public ChatPresenter(String username) {
         scm = new ServerComunicationModel("http://172.16.100.227:8080", username);
+
     }
 
     @Override
@@ -30,18 +34,22 @@ public class ChatPresenter implements IChatPresenter{
         this.view = chatView;
     }
 
+
     @Override
     public void startReadingMessageProcess() {
-            HttpAsynTask task = new HttpAsynTask(this);
-            task.execute();
+        SimpleChat.startReadingMessages(this);
+
+        // HttpAsynTask task = new HttpAsynTask(this);
+        // task.execute();
     }
 
-    public void updateView(Vector<Message> last_messages){
-         view.newMessages(last_messages);
+
+    public void updateView(Vector<Message> last_messages) {
+        view.newMessages(last_messages);
     }
 
 
-    public boolean sendMessageToModel(String message){
+    public boolean sendMessageToModel(String message) {
         try {
             return scm.sendMessage(message);
         } catch (Exception e) {
@@ -64,7 +72,8 @@ public class ChatPresenter implements IChatPresenter{
     }
 
     public void sendMessageResult(boolean result) {
-        if(result) view.messageSendedOK();
+        if (result) view.messageSendedOK();
         else view.messageSendedError();
     }
 }
+

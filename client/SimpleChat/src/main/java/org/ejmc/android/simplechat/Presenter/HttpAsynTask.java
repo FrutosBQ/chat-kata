@@ -19,7 +19,7 @@ class HttpAsynTask extends AsyncTask<String, Void, Vector<Message>> {
     //private final ServerComunicationModel scm;
     private final ChatPresenter cp;
 
-    public  HttpAsynTask(ChatPresenter cp){
+    public HttpAsynTask(ChatPresenter cp) {
         this.cp = cp;
     }
 
@@ -33,13 +33,12 @@ class HttpAsynTask extends AsyncTask<String, Void, Vector<Message>> {
             e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
         }
         //view.newMessages(last_messages);
-         return null;
+        return null;
     }
-
 
 
     @Override
     protected void onPostExecute(Vector<Message> result) {
-                 cp.updateView(result);
+        cp.updateView(result);
     }
 }
