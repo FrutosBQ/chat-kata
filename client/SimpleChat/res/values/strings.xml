@@ -8,4 +8,5 @@
     <string name="chat_text_wellcome">Wellcome</string>
     <string name="chat_button_send"> > </string>
     <string name="error_login">Error: Login/Password erroneo</string>
+    <string name="error_sending_message">Error: Message not sended</string>
 </resources>

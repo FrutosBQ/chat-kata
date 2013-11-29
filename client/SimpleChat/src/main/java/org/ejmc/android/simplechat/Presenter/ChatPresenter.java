@@ -21,7 +21,7 @@ public class ChatPresenter implements IChatPresenter{
     private ServerComunicationModel scm;
 
     public ChatPresenter(String username){
-        scm = new ServerComunicationModel("http://172.16.100.188:8080", username);
+        scm = new ServerComunicationModel("http://172.16.100.227:8080", username);
     }
 
     @Override
@@ -52,7 +52,7 @@ public class ChatPresenter implements IChatPresenter{
     @Override
     public void sendMessage(String message) {
         HttpPostAsynTask task = new HttpPostAsynTask(this);
-        task.execute();
+        task.execute(message);
     }
 
     public void setScm(ServerComunicationModel scm) {

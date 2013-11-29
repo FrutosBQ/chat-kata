@@ -65,23 +65,41 @@ public class ChatView extends Activity implements IChatView {
     private void sendMessage() {
         //To change body of created methods use File | Settings | File Templates.
         EditText message = (EditText) this.findViewById(R.id.chat_editText_message);
+        if(message.getText().toString().length()>0){
+            setFormVisibility(false);
+            chatPresenter.sendMessage(message.getText().toString());
+        }
+    }
+
+    private void setFormVisibility(boolean visibility) {
+        EditText message = (EditText) this.findViewById(R.id.chat_editText_message);
         Button button_Send = (Button) findViewById(R.id.chat_button_send);
         ProgressBar progressBar_Send = (ProgressBar) findViewById(R.id.chat_progressBar_send);
-        progressBar_Send.setVisibility(1);
-        button_Send.setEnabled(false);
-        message.setFocusable(false);
-
-        chatPresenter.sendMessage(message.getText().toString());
+        if(!visibility){
+            progressBar_Send.setVisibility(ProgressBar.VISIBLE);
+        }
+        else{
+            progressBar_Send.setVisibility(ProgressBar.INVISIBLE);
+        }
+        button_Send.setEnabled(visibility);
+        message.setFocusable(visibility);
+        message.setFocusableInTouchMode(visibility);
     }
 
     @Override
     public void messageSendedOK() {
+        setFormVisibility(true);
+        EditText message = (EditText) this.findViewById(R.id.chat_editText_message);
+        message.setText("");
         //To change body of implemented methods use File | Settings | File Templates.
     }
 
     @Override
     public void messageSendedError() {
+        setFormVisibility(true);
+        showError(getResources().getString(R.string.error_sending_message).toString());
         //To change body of implemented methods use File | Settings | File Templates.
+
     }
 
     @Override
@@ -107,7 +125,8 @@ public class ChatView extends Activity implements IChatView {
 
     @Override
     public void showError(String errorMessage) {
-        //To change body of implemented methods use File | Settings | File Templates.
+        Toast toast = Toast.makeText(this, errorMessage, Toast.LENGTH_SHORT);
+        toast.show();
     }
 
 

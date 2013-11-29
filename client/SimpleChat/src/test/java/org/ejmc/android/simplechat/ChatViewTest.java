@@ -11,9 +11,11 @@ import org.junit.runner.RunWith;
 import org.mockito.Mockito;
 import org.robolectric.Robolectric;
 import org.robolectric.RobolectricTestRunner;
+import org.robolectric.shadows.ShadowToast;
 
 import java.util.Vector;
 
+import static junit.framework.Assert.assertTrue;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
@@ -64,6 +66,7 @@ public class ChatViewTest {
         assertNotNull(send);
     }
 
+
     @Test
     public void sendMessagesToTheChatPresenter(){
         EditText message = (EditText) activity.findViewById(R.id.chat_editText_message);
@@ -78,6 +81,44 @@ public class ChatViewTest {
         assertFalse(send.isEnabled());
         //assertThat(progressBar_Send.getVisibility(), equalTo(1));
 
+    }
+
+    @Test
+    public void MessageSendedError(){
+        EditText message = (EditText) activity.findViewById(R.id.chat_editText_message);
+        String message_to_send = "Test Send";
+        message.setText(message_to_send);
+        Button send = (Button) activity.findViewById(R.id.chat_button_send);
+        send.performClick();
+        ProgressBar progressBar_Send = (ProgressBar) activity.findViewById(R.id.chat_progressBar_send);
+
+        activity.messageSendedError();
+
+        assertTrue(message.isFocusableInTouchMode());
+        assertTrue(send.isEnabled());
+        assertThat(message_to_send, equalTo(message.getText().toString()));
+
+        assertThat(ShadowToast.getTextOfLatestToast(), equalTo(activity.getResources().getString(R.string.error_sending_message).toString()));
+
+        //assertThat(progressBar_Send.getVisibility(), equalTo(0));
+    }
+    @Test
+    public void MessageSendedOk(){
+        EditText message = (EditText) activity.findViewById(R.id.chat_editText_message);
+        String message_to_send = "Test Send";
+        message.setText(message_to_send);
+        Button send = (Button) activity.findViewById(R.id.chat_button_send);
+        send.performClick();
+        ProgressBar progressBar_Send = (ProgressBar) activity.findViewById(R.id.chat_progressBar_send);
+
+        activity.messageSendedOK();
+
+        assertTrue(message.isFocusableInTouchMode());
+        assertTrue(send.isEnabled());
+        assertThat("", equalTo(message.getText().toString()));
+
+
+        //assertThat(progressBar_Send.getVisibility(), equalTo(0));
     }
 
     @Test
