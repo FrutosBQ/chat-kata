@@ -203,7 +203,7 @@ public class ChatView extends Activity implements IChatView {
             for (Message message : messages) {
                 if (this.messages.size() > 0) {
                     Message lastMessage = this.messages.lastElement();
-                    if (message.nick.equals(lastMessage.nick)) lastMessage.message += "<br>" + message.message;
+                    if (message.nick.equals(lastMessage.nick)) lastMessage.message += "\n\n" + message.message;
                     else this.messages.add(message);
                 } else {
                     this.messages.add(message);
@@ -225,10 +225,18 @@ public class ChatView extends Activity implements IChatView {
             }
 
             try {
-                TextView name_lbl = (TextView) row.findViewById(R.id.messagesList_editText_message);
-                if(messages.get(position).nick.equals(username)) row.setBackgroundResource(R.drawable.my_bubble);
-                String messege_html= "<b>"+messages.get(position).nick + " :</b> " + messages.get(position).message ;
-                name_lbl.setText(Html.fromHtml(messege_html));
+                TextView editText_message = (TextView) row.findViewById(R.id.messagesList_editText_message);
+                TextView editText_nick = (TextView) row.findViewById(R.id.messagesList_editText_nick);
+
+                if(messages.get(position).nick.equals(username)){
+                    row.setBackgroundResource(R.drawable.my_bubble);
+                }else{
+                    row.setBackgroundResource(R.drawable.bubble);
+                }
+                String messege= messages.get(position).message ;
+                String nick= messages.get(position).nick;
+                editText_message.setText(messege);
+                editText_nick.setText(nick);
 
 
             } catch (Exception e) {
