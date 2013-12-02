@@ -18,6 +18,7 @@ public class ChatState {
     private static ChatState chatState = null;
     private Vector<ChatMessage> messagesInChatSession;
 
+
     private ChatState() {
         messagesInChatSession = new Vector<ChatMessage>();
     }
