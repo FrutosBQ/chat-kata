@@ -2,7 +2,8 @@ package org.ejmc.android.simplechat;
 
 import android.os.Bundle;
 import android.widget.*;
-import org.ejmc.android.simplechat.Model.Message;
+import org.ejmc.android.simplechat.Model.ChatMessage;
+import org.ejmc.android.simplechat.Model.ChatState;
 import org.ejmc.android.simplechat.Presenter.ChatPresenter;
 import org.ejmc.android.simplechat.View.ChatView;
 import org.junit.Before;
@@ -123,12 +124,13 @@ public class ChatViewTest {
 
     @Test
     public void addMessagesToTheListView(){
-        Vector<Message> messages = new Vector<Message>();
-        messages.add(new Message("nick1","message1"));
-        messages.add(new Message("nick2","message2"));
 
+        Vector<ChatMessage> messages = new Vector<ChatMessage>();
+        messages.add(new ChatMessage("nick1","message1"));
+        messages.add(new ChatMessage("nick2","message2"));
+        ChatState.getChatState().addMessages(messages);
 
-        ((ChatView)activity).newMessages(messages);
+        ((ChatView) activity).updateMessages();
         ListView messagesListView = (ListView) activity.findViewById(R.id.chat_listView_messages);
 
         for(int i=0;i<messages.size();i++){

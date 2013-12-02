@@ -2,14 +2,14 @@ package org.ejmc.android.simplechat.View;
 
 import android.app.Activity;
 import android.os.Bundle;
-import android.text.Html;
-import android.util.Log;
+import android.os.Handler;
+import android.os.Looper;
+import android.os.Message;
 import android.view.KeyEvent;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.*;
-import org.ejmc.android.simplechat.Model.Message;
+import org.ejmc.android.simplechat.Model.ChatMessage;
+import org.ejmc.android.simplechat.Model.ChatState;
 import org.ejmc.android.simplechat.Presenter.ChatPresenter;
 import org.ejmc.android.simplechat.R;
 
@@ -21,43 +21,65 @@ import java.util.Vector;
  * @author startic
  */
 public class ChatView extends Activity implements IChatView {
-
-    private Vector<Message> messages;
+    private ChatState chatState;
     protected ChatPresenter chatPresenter = null;
-    private ListaAdapter listaAdapter;
+    private ListAdapter listAdapter;
     private String username;
+    private Handler internalHandler;
+    private ListView listView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_chat);
 
         configureListeners();
-
-        messages = new Vector<Message>();
-        listaAdapter = new ListaAdapter(messages);
-        ListView lv = (ListView) findViewById(R.id.chat_listView_messages);
-        lv.setAdapter(listaAdapter);
-
-
-        Bundle extras = getIntent().getExtras();
-        String usernameConfigured = "testUser";
-        if (extras != null) usernameConfigured = extras.get("Username").toString();
-
-        TextView usernameText = (TextView) findViewById(R.id.chat_textView_username);
-
-        usernameText.setText(usernameConfigured);
-        username = usernameConfigured;
-
-        if (chatPresenter == null) chatPresenter = new ChatPresenter(usernameConfigured);
-        chatPresenter.setView(this);
+        configureChatState();
+        configureUsernameFromIntent();
+        configureListview();
+        configurePresenter();
+        configureMessagesHandler();
         startReadingMessageProcess();
     }
 
-    public void startReadingMessageProcess() {
-        chatPresenter.startReadingMessageProcess();
+    private void configureChatState(){
+        chatState = ChatState.getChatState();
     }
 
+    private void configurePresenter() {
+        if (chatPresenter == null) chatPresenter = new ChatPresenter(username);
+        chatPresenter.setView(this);
+    }
+
+    private void configureUsernameFromIntent() {
+        Bundle extras = getIntent().getExtras();
+        String usernameConfigured = "testUser";
+        if (extras != null) usernameConfigured = extras.get("Username").toString();
+        TextView usernameText = (TextView) findViewById(R.id.chat_textView_username);
+        usernameText.setText(usernameConfigured);
+        username = usernameConfigured;
+    }
+
+    private void configureListview(){
+        Vector<ChatMessage> chatMessages = chatState.getMessages();
+        listAdapter  = new ListAdapter(username, chatMessages);
+        listView = (ListView) findViewById(R.id.chat_listView_messages);
+        listView.setAdapter(listAdapter);
+    }
+
+    private void configureMessagesHandler(){
+       internalHandler = new Handler(Looper.getMainLooper()) {
+            @Override
+            public void handleMessage(Message inputMessage) {
+                listAdapter.notifyDataSetChanged();
+            }
+        };
+    }
+
+    private void startReadingMessageProcess() {
+        chatPresenter.startReadingMessageProcess();
+    }
 
     private void configureListeners() {
         Button button_Login = (Button) findViewById(R.id.chat_button_send);
@@ -73,7 +95,6 @@ public class ChatView extends Activity implements IChatView {
 
         message.setOnKeyListener(new View.OnKeyListener() {
             public boolean onKey(View v, int keyCode, KeyEvent event) {
-                // If the event is a key-down event on the "enter" button
                 if ((event.getAction() == KeyEvent.ACTION_DOWN) &&
                         (keyCode == KeyEvent.KEYCODE_ENTER)) {
                     sendMessage();
@@ -82,11 +103,9 @@ public class ChatView extends Activity implements IChatView {
                 return false;
             }
         });
-
     }
 
     private void sendMessage() {
-        //To change body of created methods use File | Settings | File Templates.
         EditText message = (EditText) this.findViewById(R.id.chat_editText_message);
         if (message.getText().toString().length() > 0) {
             setFormVisibility(false);
@@ -114,47 +133,21 @@ public class ChatView extends Activity implements IChatView {
         EditText message = (EditText) this.findViewById(R.id.chat_editText_message);
         message.setText("");
         message.requestFocus();
-        //To change body of implemented methods use File | Settings | File Templates.
-        ListView lv = (ListView) findViewById(R.id.chat_listView_messages);
-        lv.setSelection(listaAdapter.getCount() - 1);
+        listView.setSelection(listAdapter.getCount() - 1);
     }
 
     @Override
     public void messageSendedError() {
         setFormVisibility(true);
         EditText message = (EditText) this.findViewById(R.id.chat_editText_message);
-
         showError(getResources().getString(R.string.error_sending_message).toString());
         message.requestFocus();
-        //To change body of implemented methods use File | Settings | File Templates.
-
     }
 
     @Override
-    public void newMessages(Vector<Message> messages) {
-        if (messages != null) {
-            boolean listViewInTheBottom = false;
-            ListView lv = (ListView) findViewById(R.id.chat_listView_messages);
-            if (lv.getLastVisiblePosition() == listaAdapter.getCount() - 1) listViewInTheBottom = true;
-            listaAdapter.addMessages(messages);
-            listaAdapter.notifyDataSetChanged();
-            if (listViewInTheBottom && messages.size() > 0) lv.setSelection(listaAdapter.getCount() - 1);
-        }
-    }
-
-    @Override
-    public void navigate(Class<?> destination) {
-        //To change body of implemented methods use File | Settings | File Templates.
-    }
-
-    @Override
-    public void navigate(Class<?> destination, boolean logoutFlag) {
-        //To change body of implemented methods use File | Settings | File Templates.
-    }
-
-    @Override
-    public void navigate(Class<?> destination, Bundle extras) {
-        //To change body of implemented methods use File | Settings | File Templates.
+    public void updateMessages() {
+        Message msg =  internalHandler.obtainMessage();
+        internalHandler.sendMessage(msg);
     }
 
     @Override
@@ -163,6 +156,7 @@ public class ChatView extends Activity implements IChatView {
         toast.show();
     }
 
+<<<<<<< HEAD
     public Vector<Message> getMessage() {
         return messages;
     }
@@ -250,5 +244,13 @@ public class ChatView extends Activity implements IChatView {
     }
 
 
+=======
+    @Override
+    public void navigate(Class<?> destination) {}
+    @Override
+    public void navigate(Class<?> destination, boolean logoutFlag) {}
+    @Override
+    public void navigate(Class<?> destination, Bundle extras) {}
+>>>>>>> MessageRefactor
 }
 

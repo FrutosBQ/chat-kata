@@ -103,7 +103,7 @@ public class LoginView extends Activity implements ILoginView {
         String username = editText_username.getText().toString();
 
         Context context = SimpleChat.getAppContext();
-        SharedPreferences preferencias= context.getSharedPreferences("org.ejmc.android.simplechat",context.MODE_PRIVATE);
+        SharedPreferences preferencias = context.getSharedPreferences("org.ejmc.android.simplechat", context.MODE_PRIVATE);
         SharedPreferences.Editor editor = preferencias.edit();
         editor.putString(lastUsernameKey, username);
         editor.putString(lastPasswordKey, password);
@@ -123,7 +123,7 @@ public class LoginView extends Activity implements ILoginView {
         String username = editText_username.getText().toString();
 
         Context context = SimpleChat.getAppContext();
-        SharedPreferences preferencias= context.getSharedPreferences("org.ejmc.android.simplechat",context.MODE_PRIVATE);
+        SharedPreferences preferencias = context.getSharedPreferences("org.ejmc.android.simplechat", context.MODE_PRIVATE);
 
         editText_password.setText(preferencias.getString(lastPasswordKey, ""));
         editText_username.setText(preferencias.getString(lastUsernameKey, "Username"));

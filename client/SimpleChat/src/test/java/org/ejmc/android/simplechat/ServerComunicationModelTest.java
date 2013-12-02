@@ -3,8 +3,7 @@ package org.ejmc.android.simplechat;
 
 import org.apache.http.HttpRequest;
 import org.apache.http.client.methods.HttpPost;
-import org.apache.http.params.HttpParams;
-import org.ejmc.android.simplechat.Model.Message;
+import org.ejmc.android.simplechat.Model.ChatMessage;
 import org.ejmc.android.simplechat.Model.ParseNetResultException;
 import org.ejmc.android.simplechat.Model.ServerComunicationModel;
 import org.junit.Before;
@@ -52,11 +51,11 @@ public class ServerComunicationModelTest {
                 "}";
         Robolectric.addPendingHttpResponse(200, "OK");
         Mockito.when(scm.GET()).thenReturn(return_messages);
-        Vector<Message> messages = scm.getLastMessages();
-        Vector<Message> expected_messages = new Vector<Message>();
-        expected_messages.add(new Message("user1", "hi there"));
-        expected_messages.add(new Message("user2", "hola"));
-        assertArrayEquals(expected_messages.toArray(), messages.toArray());
+        Vector<ChatMessage> chatMessages = scm.getLastMessages();
+        Vector<ChatMessage> expected_Chat_messages = new Vector<ChatMessage>();
+        expected_Chat_messages.add(new ChatMessage("user1", "hi there"));
+        expected_Chat_messages.add(new ChatMessage("user2", "hola"));
+        assertArrayEquals(expected_Chat_messages.toArray(), chatMessages.toArray());
     }
 
     @Test

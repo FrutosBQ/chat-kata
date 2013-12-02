@@ -13,7 +13,7 @@ import java.util.Vector;
 
 public class Response {
     @SerializedName("messages")
-    public Vector<Message> Messages;
+    public Vector<ChatMessage> messages;
     @SerializedName("nextSeq")
     public int nextSeq;
 }
