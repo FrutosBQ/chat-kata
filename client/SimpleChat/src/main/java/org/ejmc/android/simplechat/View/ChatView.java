@@ -156,101 +156,13 @@ public class ChatView extends Activity implements IChatView {
         toast.show();
     }
 
-<<<<<<< HEAD
-    public Vector<Message> getMessage() {
-        return messages;
-    }
 
-    public void setMessage(Vector<Message> messages) {
-        this.messages = messages;
-    }
-
-
-    class ListaAdapter extends BaseAdapter {
-
-        private Vector<Message> messages;
-
-
-        public ListaAdapter(Vector<Message> messages) {
-            this.messages = messages;
-
-        }
-
-
-        @Override
-        public int getCount() {
-            return messages.size();
-            //To change body of implemented methods use File | Settings | File Templates.
-        }
-
-        @Override
-        public Object getItem(int position) {
-            return messages.get(position);
-        }
-
-        @Override
-        public long getItemId(int position) {
-            return 0;
-        }
-
-        public void addMessages(Vector<Message> messages) {
-            for (Message message : messages) {
-                if (this.messages.size() > 0) {
-                    Message lastMessage = this.messages.lastElement();
-                    if (message.nick.equals(lastMessage.nick)) lastMessage.message += "\n\n" + message.message;
-                    else this.messages.add(message);
-                } else {
-                    this.messages.add(message);
-                }
-            }
-            //this.messages.addAll(messages)
-        }
-
-
-        @Override
-        public View getView(int position, View convertView, ViewGroup parent) {
-
-            View row = convertView;
-
-            if (row == null) {
-                LayoutInflater inflater = getLayoutInflater();
-
-                row = inflater.inflate(R.layout.messages_list, parent, false);
-            }
-
-            try {
-                TextView editText_message = (TextView) row.findViewById(R.id.messagesList_editText_message);
-                TextView editText_nick = (TextView) row.findViewById(R.id.messagesList_editText_nick);
-
-                if(messages.get(position).nick.equals(username)){
-                    row.setBackgroundResource(R.drawable.my_bubble);
-                }else{
-                    row.setBackgroundResource(R.drawable.bubble);
-                }
-                String messege= messages.get(position).message ;
-                String nick= messages.get(position).nick;
-                editText_message.setText(messege);
-                editText_nick.setText(nick);
-
-
-            } catch (Exception e) {
-                Log.e(ListaAdapter.class.getName(),
-                        "Fallo al rellenar la lista:" + e.toString());
-            }
-
-            return (row);
-        }
-
-    }
-
-
-=======
     @Override
     public void navigate(Class<?> destination) {}
     @Override
     public void navigate(Class<?> destination, boolean logoutFlag) {}
     @Override
     public void navigate(Class<?> destination, Bundle extras) {}
->>>>>>> MessageRefactor
+
 }
 

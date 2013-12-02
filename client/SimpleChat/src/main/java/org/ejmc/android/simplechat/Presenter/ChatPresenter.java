@@ -28,13 +28,8 @@ public class ChatPresenter implements IChatPresenter {
     private static Timer timer = null;
 
     public ChatPresenter(String username) {
-<<<<<<< HEAD
-        scm = new ServerComunicationModel("http://172.16.100.43:8080", username);
-
-=======
         scm       = new ServerComunicationModel("http://172.16.100.43:8080", username);
         chatState = ChatState.getChatState();
->>>>>>> MessageRefactor
     }
 
     @Override

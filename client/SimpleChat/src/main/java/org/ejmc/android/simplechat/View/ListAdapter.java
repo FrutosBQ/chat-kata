@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 import org.ejmc.android.simplechat.Model.ChatMessage;
+import org.ejmc.android.simplechat.Model.ChatState;
 import org.ejmc.android.simplechat.R;
 import org.ejmc.android.simplechat.SimpleChat;
 
@@ -45,9 +46,11 @@ public class ListAdapter extends BaseAdapter {
     }
 
 
+
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         View row = convertView;
+        Vector<ChatMessage> messages = ChatState.getChatState().getMessages();
 
         if (row == null) {
             LayoutInflater inflater = (LayoutInflater) SimpleChat.getAppContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -55,10 +58,18 @@ public class ListAdapter extends BaseAdapter {
         }
 
         try {
-            TextView name_lbl = (TextView) row.findViewById(R.id.messagesList_editText_message);
-            if (chatMessages.get(position).nick.equals(username)) row.setBackgroundResource(R.drawable.my_bubble);
-            String messege_html = "<b>" + chatMessages.get(position).nick + " :</b> " + chatMessages.get(position).message;
-            name_lbl.setText(Html.fromHtml(messege_html));
+            TextView editText_message = (TextView) row.findViewById(R.id.messagesList_editText_message);
+            TextView editText_nick = (TextView) row.findViewById(R.id.messagesList_editText_nick);
+
+            if(messages.get(position).nick.equals(username)){
+                row.setBackgroundResource(R.drawable.my_bubble);
+            }else{
+                row.setBackgroundResource(R.drawable.bubble);
+            }
+            String messege= messages.get(position).message ;
+            String nick= messages.get(position).nick;
+            editText_message.setText(messege);
+            editText_nick.setText(nick);
         } catch (Exception e) {
             Log.e(ListAdapter.class.getName(),
                     "Fallo al rellenar la lista:" + e.toString());

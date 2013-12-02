@@ -39,7 +39,7 @@ public class ChatState {
         for (ChatMessage chatMessage : messagesToAdd) {
             if (this.messagesInChatSession.size() > 0) {
                 ChatMessage lastChatMessage = this.messagesInChatSession.lastElement();
-                if (chatMessage.nick.equals(lastChatMessage.nick)) lastChatMessage.message += "<br>" + chatMessage.message;
+                if (chatMessage.nick.equals(lastChatMessage.nick)) lastChatMessage.message += "\n" + chatMessage.message;
                 else this.messagesInChatSession.add(chatMessage);
             } else {
                 this.messagesInChatSession.add(chatMessage);
