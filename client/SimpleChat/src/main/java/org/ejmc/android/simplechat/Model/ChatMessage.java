@@ -9,7 +9,7 @@ import com.google.gson.annotations.SerializedName;
  * Time: 11:43
  * To change this template use File | Settings | File Templates.
  */
-public class Message {
+public class ChatMessage {
 
     @SerializedName("message")
     public  String message;
@@ -18,7 +18,7 @@ public class Message {
     public String nick;
 
 
-    public Message(String user, String message_text) {
+    public ChatMessage(String user, String message_text) {
         //To change body of created methods use File | Settings | File Templates.
         this.message = message_text;
         this.nick = user;
@@ -30,8 +30,8 @@ public class Message {
      */
     @Override public boolean equals(Object aThat) {
         if (this == aThat) return true;
-        if (!(aThat instanceof Message)) return false;
-        Message that = (Message)aThat;
+        if (!(aThat instanceof ChatMessage)) return false;
+        ChatMessage that = (ChatMessage)aThat;
 
         return ( this.nick.equals(that.nick) && ( this.message.equals(that.message)));
     }

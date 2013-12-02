@@ -1,6 +1,6 @@
 package org.ejmc.android.simplechat;
 
-import org.ejmc.android.simplechat.Model.Message;
+import org.ejmc.android.simplechat.Model.ChatMessage;
 import org.ejmc.android.simplechat.Model.ServerComunicationModel;
 import org.ejmc.android.simplechat.Presenter.ChatPresenter;
 import org.ejmc.android.simplechat.View.ChatView;
@@ -11,6 +11,7 @@ import org.junit.runner.RunWith;
 import org.mockito.Mockito;
 import org.robolectric.Robolectric;
 import org.robolectric.RobolectricTestRunner;
+import org.robolectric.shadows.ShadowSystemClock;
 
 import java.util.Vector;
 
@@ -22,7 +23,6 @@ import static org.mockito.Mockito.verify;
  * User: frutos
  * Date: 27/11/13
  * Time: 16:35
- * To change this template use File | Settings | File Templates.
  */
 @RunWith(RobolectricTestRunner.class)
 public class ChatPresenterTest {
@@ -41,8 +41,8 @@ public class ChatPresenterTest {
         IChatView chatViewMock = mock(IChatView.class);
         ServerComunicationModel scmMock = mock(ServerComunicationModel.class);
 
-        Vector<Message> messages = new Vector<Message>();
-        messages.add(new Message("nick","text"));
+        Vector<ChatMessage> messages = new Vector<ChatMessage>();
+        messages.add(new ChatMessage("nick","text"));
 
         Mockito.when(scmMock.getLastMessages()).thenReturn(messages);
 
@@ -51,9 +51,10 @@ public class ChatPresenterTest {
 
         chatPresenter.startReadingMessageProcess();
 
-        Robolectric.runUiThreadTasksIncludingDelayedTasks();
+        //Robolectric.runUiThreadTasksIncludingDelayedTasks();
 
-        verify(chatViewMock).newMessages(messages);
+        Thread.sleep(700);
+        verify(chatViewMock).updateMessages();
     }
 
     @Test

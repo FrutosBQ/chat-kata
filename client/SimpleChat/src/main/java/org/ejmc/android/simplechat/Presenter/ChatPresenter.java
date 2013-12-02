@@ -1,13 +1,18 @@
 package org.ejmc.android.simplechat.Presenter;
 
 import android.os.Handler;
-import org.ejmc.android.simplechat.Model.Message;
+import android.os.Looper;
+import android.os.Message;
+import org.ejmc.android.simplechat.Model.ChatState;
+import org.ejmc.android.simplechat.Model.ChatMessage;
 import org.ejmc.android.simplechat.Model.ParseNetResultException;
 import org.ejmc.android.simplechat.Model.ServerComunicationModel;
 import org.ejmc.android.simplechat.SimpleChat;
 import org.ejmc.android.simplechat.View.IChatView;
 
 import java.io.IOException;
+import java.util.Timer;
+import java.util.TimerTask;
 import java.util.Vector;
 
 /**
@@ -15,38 +20,45 @@ import java.util.Vector;
  * User: frutos
  * Date: 27/11/13
  * Time: 16:56
- * To change this template use File | Settings | File Templates.
  */
 public class ChatPresenter implements IChatPresenter {
     IChatView view;
-
     private ServerComunicationModel scm;
-    //public LoopRetriveMessage loopRetrieveMessage;
+    private ChatState chatState;
+    private static Timer timer = null;
 
     public ChatPresenter(String username) {
-        scm = new ServerComunicationModel("http://172.16.100.85:8080", username);
-
+        scm       = new ServerComunicationModel("http://172.16.100.43:8080", username);
+        chatState = ChatState.getChatState();
     }
 
     @Override
     public void setView(IChatView chatView) {
-        //To change body of implemented methods use File | Settings | File Templates.
         this.view = chatView;
     }
 
-
     @Override
     public void startReadingMessageProcess() {
-
-        SimpleChat.startReadingMessages(this);
-
+        TimerTask tt = new TimerTask(){
+            public void run(){
+                try {
+                    Vector<ChatMessage> chatMessages = scm.getLastMessages();
+                    if (chatMessages.size() > 0) {
+                        chatState.addMessages(chatMessages);
+                        view.updateMessages();
+                    }
+                } catch (IOException e) {
+                    e.printStackTrace();
+                } catch (ParseNetResultException e) {
+                    e.printStackTrace();
+                }
+            }
+        };
+        if (timer==null) {
+            timer = new Timer();
+            timer.schedule(tt,500,500);
+        }
     }
-
-
-    public void updateView(Vector<Message> last_messages) {
-        view.newMessages(last_messages);
-    }
-
 
     public boolean sendMessageToModel(String message) {
         try {
@@ -66,12 +78,7 @@ public class ChatPresenter implements IChatPresenter {
         this.scm = scm;
     }
 
-    public Vector<Message> retriveMessages() throws IOException, ParseNetResultException {
-        return scm.getLastMessages();
-    }
-
     public void sendMessageResult(boolean result) {
-
         if (result) view.messageSendedOK();
         else view.messageSendedError();
     }

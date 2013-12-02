@@ -1,9 +1,5 @@
 package org.ejmc.android.simplechat.View;
 
-import org.ejmc.android.simplechat.Model.Message;
-
-import java.util.Vector;
-
 /**
  * Created with IntelliJ IDEA.
  * User: frutos
@@ -17,5 +13,5 @@ public interface IChatView extends IView {
 
     void messageSendedError();
 
-    void newMessages(Vector<Message> messages);
+    void updateMessages();
 }
